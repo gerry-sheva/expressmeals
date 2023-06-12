@@ -1,0 +1,122 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ROLE {
+  USER
+  RIDER
+  PARTNER
+  CAREGIVER
+}
+
+model User {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  username String @unique
+  password String
+  role     ROLE   @default(USER)
+
+  orders Order[]
+  cares  Care[]
+}
+
+model Partner {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  username String @unique
+  password String
+  role     ROLE   @default(PARTNER)
+
+  meals Meal[]
+}
+
+enum AVAILABILITY_STATUS {
+  AVAILABLE
+  UNAVAILABLE
+}
+
+model Rider {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  username String              @unique
+  password String
+  status   AVAILABILITY_STATUS @default(AVAILABLE)
+  role     ROLE                @default(RIDER)
+
+  orders Order[]
+}
+
+model Caregiver {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  username String              @unique
+  password String
+  status   AVAILABILITY_STATUS @default(AVAILABLE)
+  role     ROLE                @default(CAREGIVER)
+  cares    Care[]
+}
+
+model Meal {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  name         String  @db.VarChar(255)
+  providedById String
+  providedBy   Partner @relation(fields: [providedById], references: [id])
+  orders       Order[]
+
+  @@unique([id, providedById])
+}
+
+enum ORDER_STATUS {
+  PREPARING
+  WAITING_FOR_RIDER
+  DELIVERING
+  COMPLETED
+}
+
+model Order {
+  id        String       @id @default(uuid())
+  createdAt DateTime     @default(now())
+  status    ORDER_STATUS @default(PREPARING)
+
+  menuId String
+  menu   Meal   @relation(fields: [menuId], references: [id])
+
+  deliveredById String
+  deliveredBy   Rider  @relation(fields: [deliveredById], references: [id])
+
+  deliveredToId String
+  deliveredTo   User   @relation(fields: [deliveredToId], references: [id])
+
+  @@unique([id, menuId])
+  @@unique([id, deliveredById])
+  @@unique([id, deliveredToId])
+}
+
+model Care {
+  id        String       @id @default(uuid())
+  createdAt DateTime     @default(now())
+  status    ORDER_STATUS @default(PREPARING)
+
+  deliveredById String
+  deliveredBy   Caregiver @relation(fields: [deliveredById], references: [id])
+
+  deliveredToId String
+  deliveredTo   User   @relation(fields: [deliveredToId], references: [id])
+
+  @@unique([id, deliveredById])
+  @@unique([id, deliveredToId])
+}
