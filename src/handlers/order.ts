@@ -32,3 +32,25 @@ export const createOrder =async (req, res) => {
 
     res.json({data: order})
 }
+
+export const getUserOrders =async (req, res) => {
+    const orders = await prisma.order.findMany({
+        where: {
+            deliveredToId: req.user.id
+        },
+        include: {
+            menu: {
+                select: {
+                    name: true,
+                    providedBy: {
+                        select: {
+                            username: true
+                        }
+                    }
+                }
+            }
+        }
+    })
+
+    res.json({data: orders})
+}

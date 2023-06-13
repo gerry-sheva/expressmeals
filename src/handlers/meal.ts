@@ -14,7 +14,8 @@ export const createNewMeal = async (req, res) => {
 export const getMeals = async (req, res) => {
     const meals = await prisma.meal.findMany({
         select: {
-            name: true
+            name: true,
+            id: true
         }
     })
 
