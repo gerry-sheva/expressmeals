@@ -53,6 +53,15 @@ export const deliveringStatus =async (req, res) => {
         }
     })
 
+    const rider = await prisma.rider.update({
+        where: {
+            id: req.user.id
+        },
+        data: {
+            status: 'AVAILABLE'
+        }
+    })
+
     res.json({data: order})
 }
 

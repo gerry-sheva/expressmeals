@@ -23,7 +23,7 @@ app.get("/", async (req, res) => {
 
 app.use('/api', protect, router)
 app.use('/auth', authRouter)
-app.put('/rider/order/:id', deliveringStatus)
+// app.put('/rider/order/:id', deliveringStatus)
 
 
 export default app

@@ -34,7 +34,7 @@ router.put('/caregiver/care/:id', deliverCare)
 
 // Rider
 // router.put('/rider/:id', body('username').exists().isString(), handleInputErrors, (req, res) => {})
-// router.put('/rider/order/:id', deliveringStatus)
+router.put('/rider/order/:id', deliveringStatus)
 router.get('/rider', getRiders)
 router.get('/rider/order', getRiderOrders)
 

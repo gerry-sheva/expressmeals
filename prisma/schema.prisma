@@ -21,9 +21,12 @@ model User {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
 
-  username String @unique
-  password String
-  role     ROLE   @default(USER)
+  username  String  @unique
+  password  String
+  latitude  Decimal @default(-7.769540)
+  longitude Decimal @default(110.381190)
+
+  role ROLE @default(USER)
 
   orders Order[]
   cares  Care[]
@@ -33,9 +36,12 @@ model Partner {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
 
-  username String @unique
-  password String
-  role     ROLE   @default(PARTNER)
+  username  String  @unique
+  password  String
+  latitude  Decimal @default(-7.795580)
+  longitude Decimal @default(110.369492)
+
+  role ROLE @default(PARTNER)
 
   meals Meal[]
 }
@@ -91,6 +97,7 @@ model Order {
   id        String       @id @default(uuid())
   createdAt DateTime     @default(now())
   status    ORDER_STATUS @default(PREPARING)
+  frozen    Boolean      @default(false)
 
   menuId String
   menu   Meal   @relation(fields: [menuId], references: [id])
