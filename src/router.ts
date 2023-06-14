@@ -3,7 +3,7 @@ import { body } from 'express-validator'
 import { handleInputErrors } from './modules/middleware'
 import { getPartners } from './handlers/partner'
 import { createNewMeal, getMeal, getMeals } from './handlers/meal'
-import { createOrder, getUserOrders } from './handlers/order'
+import { createOrder, getRiderOrders, getUserOrders } from './handlers/order'
 import { completeCare, completeOrder } from './handlers/user'
 import { deliveringStatus, getRiders } from './handlers/rider'
 import { createCare } from './handlers/care'
@@ -34,8 +34,10 @@ router.put('/caregiver/care/:id', deliverCare)
 
 // Rider
 // router.put('/rider/:id', body('username').exists().isString(), handleInputErrors, (req, res) => {})
-router.put('/rider/order/:id', deliveringStatus)
+// router.put('/rider/order/:id', deliveringStatus)
 router.get('/rider', getRiders)
+router.get('/rider/order', getRiderOrders)
+
 
 
 // Order

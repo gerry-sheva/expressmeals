@@ -11,7 +11,11 @@ export const createNewPartner = async (req, res) => {
 
     const token = await createJWT(partner)
 
-    res.json({token})
+    res.json({
+        token,
+        username: partner.username,
+        role: partner.role
+     })
 }
 
 export const partnerSignIn = async (req, res) => {
@@ -30,7 +34,11 @@ export const partnerSignIn = async (req, res) => {
 
     const token = createJWT(partner)
 
-    res.json({token})
+    res.json({
+        token,
+        username: partner.username,
+        role: partner.role
+     })
 }
 
 export const getPartners =async (req, res) => {

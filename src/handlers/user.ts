@@ -10,7 +10,11 @@ export const createNewUser = async (req, res) => {
     })
     
     const token = createJWT(user)
-    res.json({ token })
+    res.json({
+        token,
+        username: user.username,
+        role: user.role
+     })
 }
 
 export const userSignIn = async (req, res) => {

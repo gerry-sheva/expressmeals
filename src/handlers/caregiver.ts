@@ -13,7 +13,11 @@ export const createNewCaregiver =async (req, res) => {
     })    
 
     const token = createJWT(caregiver)
-    res.json({token})
+    res.json({
+        token,
+        username: caregiver.username,
+        role: caregiver.role
+     })
 }
 
 export const caregiverSignIn =async (req, res) => {
@@ -31,7 +35,11 @@ export const caregiverSignIn =async (req, res) => {
     }
 
     const token = createJWT(caregiver)
-    res.json({token})
+    res.json({
+        token,
+        username: caregiver.username,
+        role: caregiver.role
+     })
 }
 
 export const deliverCare =async (req, res) => {

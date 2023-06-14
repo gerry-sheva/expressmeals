@@ -12,7 +12,11 @@ export const createNewRider =async (req, res) => {
 
     const token = await createJWT(rider)
 
-    res.json({token})
+    res.json({
+        token,
+        username: rider.username,
+        role: rider.role
+     })
 }
 
 export const riderSignIn =async (req, res) => {
@@ -29,7 +33,11 @@ export const riderSignIn =async (req, res) => {
 
     const token = createJWT(rider)
 
-    res.json({ token })
+    res.json({
+        token,
+        username: rider.username,
+        role: rider.role
+     })
 }
 
 export const deliveringStatus =async (req, res) => {
@@ -41,7 +49,7 @@ export const deliveringStatus =async (req, res) => {
             }
         },
         data: {
-            status: 'DELIVERING'
+            status: 'COMPLETED'
         }
     })
 
