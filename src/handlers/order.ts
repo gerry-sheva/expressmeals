@@ -49,7 +49,7 @@ export const createOrder =async (req, res) => {
     // Calculating Distance
   const client = new Client({});
 
-  const secret = "AIzaSyCvRopYpGqGe8qozVWsQKkBwNVuE0pc5FM";
+  const secret = process.env.MAP_SECRET
 
     let distance = await  client
     .distancematrix({
